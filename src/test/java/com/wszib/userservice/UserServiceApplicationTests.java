@@ -1,4 +1,4 @@
-package com.wszib.user_service;
+package com.wszib.userservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
