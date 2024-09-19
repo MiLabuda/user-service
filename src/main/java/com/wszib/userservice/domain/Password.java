@@ -4,10 +4,13 @@ import com.wszib.userservice.domain.validator.ValidPassword;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
+import lombok.Getter;
 
 import java.util.Set;
 
-class Password {
+@Getter
+public class Password {
+
     @ValidPassword
     private final String value;
 
@@ -18,5 +21,9 @@ class Password {
             throw new IllegalArgumentException(violations.iterator().next().getMessage());
         }
         this.value = value;
+    }
+
+    public static Password of(final String value) {
+        return new Password(value);
     }
 }

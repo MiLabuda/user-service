@@ -1,9 +1,11 @@
 package com.wszib.userservice.domain;
 
+import lombok.Builder;
 import lombok.Getter;
 
+@Builder
 @Getter
-class Address {
+public class Address {
 
     private AddressId id;
     private String name;

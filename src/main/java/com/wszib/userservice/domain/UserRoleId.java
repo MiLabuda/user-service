@@ -8,6 +8,14 @@ public record UserRoleId(String value) {
         }
     }
 
+    public static UserRoleId of(final String value) {
+        return new UserRoleId(value);
+    }
+
+    public static UserRoleId generate() {
+        return new UserRoleId(java.util.UUID.randomUUID().toString());
+    }
+
     public String value() {
         return value;
     }

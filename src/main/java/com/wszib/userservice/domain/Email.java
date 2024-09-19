@@ -15,6 +15,10 @@ public record Email(String email) {
         }
     }
 
+    public static Email of(final String email) {
+        return new Email(email);
+    }
+
     public String value() {
         return email;
     }
