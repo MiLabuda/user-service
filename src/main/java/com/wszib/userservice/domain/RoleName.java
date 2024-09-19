@@ -1,21 +1,29 @@
 package com.wszib.userservice.domain;
 
-public record RoleName(String value) {
+public enum RoleName{
+    ADMIN("ADMIN"),
+    USER("CUSTOMER");
 
-    private static final int MAX_LENGTH = 25;
+    private final String value;
 
-    public RoleName(String value) {
-        if (value.trim().isEmpty()) {
-            throw new IllegalArgumentException("RoleName cannot be blank");
-        }
-        if (value.length() > MAX_LENGTH) {
-            throw new IllegalArgumentException(
-                    String.format("RoleName cannot be longer than %d characters", MAX_LENGTH));
-        }
+    RoleName(String value) {
         this.value = value;
     }
 
-    public static RoleName of(final String value) {
-        return new RoleName(value);
+    public static RoleName of(String value) {
+        if (value == null) {
+            return null;
+        }
+        for (RoleName roleName : RoleName.values()) {
+            if (roleName.value.equalsIgnoreCase(value)) {
+                return roleName;
+            }
+        }
+        throw new IllegalArgumentException("RoleName not found: " + value);
+    }
+
+    public String value() {
+        return value;
     }
 }
+
