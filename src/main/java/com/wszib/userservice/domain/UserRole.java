@@ -11,6 +11,12 @@ public class UserRole {
     private UserId userId;
     private RoleName roleName;
 
-
+    public static UserRole create(UserId userId, RoleName roleName){
+        return UserRole.builder()
+                .id(UserRoleId.generate())
+                .userId(userId)
+                .roleName(roleName)
+                .build();
+    }
 
 }
