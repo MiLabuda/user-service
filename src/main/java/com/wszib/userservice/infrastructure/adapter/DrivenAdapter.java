@@ -1,4 +1,4 @@
-package com.wszib.userservice.infrastructure.common.adapter;
+package com.wszib.userservice.infrastructure.adapter;
 
 import java.lang.annotation.*;
 
