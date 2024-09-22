@@ -1,7 +1,7 @@
 package com.wszib.userservice.domain;
 
-import com.wszib.userservice.application.command.ChangeUserDetailsCommand;
-import com.wszib.userservice.application.command.CreateUserCommand;
+import com.wszib.userservice.domain.command.ChangeUserDetailsCommand;
+import com.wszib.userservice.domain.command.CreateUserCommand;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -37,6 +37,9 @@ public class User {
                 .email(new Email(cmd.email()))
                 .password(new Password(cmd.password()))
                 .roles(new HashSet<>())
+                .deliveryAddress(Address.builder().build())
+                .invoiceAddress(Address.builder().build())
+                .active(true)
                 .build();
         user.getRoles().add(UserRole.create(user.getId(), RoleName.valueOf(cmd.roleName())));
         return user;
