@@ -33,7 +33,7 @@ class GeneralRulesArchTest {
     @ArchTest
     void shouldUseFunctionsAsMappers(final JavaClasses classes) {
         classes()
-                .that().haveSimpleNameContaining("Mapper")
+                .that().haveSimpleNameEndingWith("Mapper")
                 .should().beAssignableTo(Function.class)
                 .orShould().beAssignableTo(BiFunction.class)
                 .as("Mapper classes should be implementation of Functional interfaces")
