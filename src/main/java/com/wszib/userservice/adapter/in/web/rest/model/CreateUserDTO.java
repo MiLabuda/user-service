@@ -6,11 +6,7 @@ public record CreateUserDTO(
         String email,
         String password,
         String roleName,
-        String addressName,
-        String street,
-        String city,
-        String zipCode,
-        String country
-        //TODO Implement sameInvoiceAddress logic
+        AddressDTO invoiceAddress,
+        AddressDTO deliveryAddress
 ) {
 }

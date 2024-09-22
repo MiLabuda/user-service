@@ -20,7 +20,8 @@ public class User {
     private Set<UserRole> roles;
     private Address deliveryAddress;
     private Address  invoiceAddress;
-    private Boolean active = false;
+    private Boolean active;
+
 
     public User changeDetailsBy(ChangeUserDetailsCommand cmd){
         this.firstName = new FirstName(cmd.firstName());
@@ -32,16 +33,17 @@ public class User {
     public static User createBy(CreateUserCommand cmd){
         User user =  User.builder()
                 .id(UserId.generate())
-                .firstName(new FirstName(cmd.firstName()))
-                .lastName(new LastName(cmd.lastName()))
-                .email(new Email(cmd.email()))
-                .password(new Password(cmd.password()))
+                .firstName(cmd.firstName())
+                .lastName(cmd.lastName())
+                .email(cmd.email())
+                //TODO Implement password hashing
+                .password(cmd.password())
                 .roles(new HashSet<>())
-                .deliveryAddress(Address.builder().build())
-                .invoiceAddress(Address.builder().build())
+                .invoiceAddress(cmd.invoiceAddress())
+                .deliveryAddress(cmd.deliveryAddress())
                 .active(true)
                 .build();
-        user.getRoles().add(UserRole.create(user.getId(), RoleName.valueOf(cmd.roleName())));
+        user.getRoles().add(UserRole.create(user.getId(), cmd.roleName()));
         return user;
     }
 

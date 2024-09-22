@@ -1,17 +1,15 @@
 package com.wszib.userservice.domain.command;
 
+import com.wszib.userservice.domain.*;
 import com.wszib.userservice.infrastructure.common.command.Command;
 
 public record CreateUserCommand(
-        String firstName,
-        String lastName,
-        String email,
-        String password,
-        String roleName,
-        String addressName,
-        String street,
-        String city,
-        String zipCode,
-        String country
+        FirstName firstName,
+        LastName lastName,
+        Email email,
+        Password password,
+        RoleName roleName,
+        Address invoiceAddress,
+        Address deliveryAddress
 ) implements Command {
 }
