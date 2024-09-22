@@ -12,7 +12,7 @@ class CreateUserDTOToCommandMapper implements Function<CreateUserDTO, CreateUser
     Function<AddressDTO, Address> addressDTOToDomainMapper;
 
     CreateUserDTOToCommandMapper() {
-        this(new AddressDTOToDomainMapper());
+        this(UserMappingFactory.createAddressDTOToDomainMapper());
     }
 
     CreateUserDTOToCommandMapper(
