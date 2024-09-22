@@ -11,22 +11,22 @@ import java.util.function.Function;
 
 class ChangeUserDetailsDTOToCommandMapper implements Function<ChangeUserDetailsDTO, ChangeUserDetailsCommand>   {
 
-    private final String customerId;
+    private final String userId;
 
-    public ChangeUserDetailsDTOToCommandMapper(String customerId) {
-        this.customerId = customerId;
+    public ChangeUserDetailsDTOToCommandMapper(String userId) {
+        this.userId = userId;
     }
 
     @Override
     public ChangeUserDetailsCommand apply(ChangeUserDetailsDTO changeUserDetailsDTO) {
         if(changeUserDetailsDTO == null) return null;
 
-        return new ChangeUserDetailsCommand(
-                UserId.of(customerId),
-                FirstName.of(changeUserDetailsDTO.firstName()),
-                LastName.of(changeUserDetailsDTO.lastName()),
-                Email.of(changeUserDetailsDTO.email())
-        );
+        return new ChangeUserDetailsCommand.Builder()
+                .userId(UserId.of(userId))
+                .firstName(FirstName.of(changeUserDetailsDTO.firstName()))
+                .lastName(LastName.of(changeUserDetailsDTO.lastName()))
+                .email(Email.of(changeUserDetailsDTO.email()))
+                .build();
     }
 
 

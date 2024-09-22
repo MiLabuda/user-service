@@ -6,7 +6,7 @@ import com.wszib.userservice.domain.error.NullFilterCriteriaException;
 import com.wszib.userservice.domain.querry.FilterCriteria;
 import com.wszib.userservice.domain.User;
 import com.wszib.userservice.domain.UserRepository;
-import com.wszib.userservice.infrastructure.common.adapter.DrivenAdapter;
+import com.wszib.userservice.infrastructure.adapter.DrivenAdapter;
 import jakarta.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

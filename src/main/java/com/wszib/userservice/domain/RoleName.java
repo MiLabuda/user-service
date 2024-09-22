@@ -2,7 +2,7 @@ package com.wszib.userservice.domain;
 
 public enum RoleName{
     ADMIN("ADMIN"),
-    USER("CUSTOMER");
+    CUSTOMER("CUSTOMER");
 
     private final String value;
 

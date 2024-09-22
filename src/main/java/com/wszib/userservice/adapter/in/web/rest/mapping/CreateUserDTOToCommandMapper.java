@@ -25,14 +25,14 @@ class CreateUserDTOToCommandMapper implements Function<CreateUserDTO, CreateUser
     public CreateUserCommand apply(CreateUserDTO createUserDTO) {
         if(createUserDTO == null) return null;
 
-        return new CreateUserCommand(
-                FirstName.of(createUserDTO.firstName()),
-                LastName.of(createUserDTO.lastName()),
-                Email.of(createUserDTO.email()),
-                Password.of(createUserDTO.password()),
-                RoleName.of(createUserDTO.roleName()),
-                addressDTOToDomainMapper.apply(createUserDTO.invoiceAddress()),
-                addressDTOToDomainMapper.apply(createUserDTO.deliveryAddress())
-        );
+        return new CreateUserCommand.Builder()
+                .firstName(FirstName.of(createUserDTO.firstName()))
+                .lastName(LastName.of(createUserDTO.lastName()))
+                .email(Email.of(createUserDTO.email()))
+                .password(Password.of(createUserDTO.password()))
+                .roleName(RoleName.of(createUserDTO.roleName()))
+                .invoiceAddress(addressDTOToDomainMapper.apply(createUserDTO.invoiceAddress()))
+                .deliveryAddress(addressDTOToDomainMapper.apply(createUserDTO.deliveryAddress()))
+                .build();
     }
 }

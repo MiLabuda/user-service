@@ -1,7 +1,10 @@
 package com.wszib.userservice.adapter.in.web.rest.model;
 
+import lombok.Builder;
+
 import java.util.Set;
 
+@Builder
 public record UserDTO(
         String id,
         String firstName,

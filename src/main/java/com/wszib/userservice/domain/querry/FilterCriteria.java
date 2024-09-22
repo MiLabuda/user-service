@@ -1,6 +1,6 @@
 package com.wszib.userservice.domain.querry;
 
-import com.wszib.userservice.infrastructure.common.query.Query;
+import com.wszib.userservice.infrastructure.query.Query;
 
 import java.util.Optional;
 
