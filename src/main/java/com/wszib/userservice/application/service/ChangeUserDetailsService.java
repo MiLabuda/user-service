@@ -7,15 +7,15 @@ import com.wszib.userservice.domain.User;
 import com.wszib.userservice.domain.UserNotFoundException;
 import com.wszib.userservice.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 class ChangeUserDetailsService implements ChangeUserDetailsUseCase {
 
-    private static final Logger LOGGER = LogManager.getLogger(ChangeUserDetailsService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ChangeUserDetailsService.class);
 
     private final UserRepository userRepository;
 

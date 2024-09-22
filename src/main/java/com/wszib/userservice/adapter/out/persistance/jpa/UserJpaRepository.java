@@ -8,8 +8,8 @@ import com.wszib.userservice.domain.User;
 import com.wszib.userservice.domain.UserRepository;
 import com.wszib.userservice.infrastructure.adapter.DrivenAdapter;
 import jakarta.transaction.Transactional;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 @DrivenAdapter
 class UserJpaRepository implements UserRepository {
 
-    private static final Logger LOGGER = LogManager.getLogger(UserJpaRepository.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserJpaRepository.class);
 
     Function<UserData, User> userDataToDomainMapper;
     Function<User, UserData> userDomainToDataMapper;
