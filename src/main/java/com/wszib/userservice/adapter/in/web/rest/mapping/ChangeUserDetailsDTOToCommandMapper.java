@@ -1,6 +1,10 @@
 package com.wszib.userservice.adapter.in.web.rest.mapping;
 
 import com.wszib.userservice.adapter.in.web.rest.model.ChangeUserDetailsDTO;
+import com.wszib.userservice.domain.Email;
+import com.wszib.userservice.domain.FirstName;
+import com.wszib.userservice.domain.LastName;
+import com.wszib.userservice.domain.UserId;
 import com.wszib.userservice.domain.command.ChangeUserDetailsCommand;
 
 import java.util.function.Function;
@@ -18,10 +22,10 @@ class ChangeUserDetailsDTOToCommandMapper implements Function<ChangeUserDetailsD
         if(changeUserDetailsDTO == null) return null;
 
         return new ChangeUserDetailsCommand(
-                customerId,
-                changeUserDetailsDTO.firstName(),
-                changeUserDetailsDTO.lastName(),
-                changeUserDetailsDTO.email()
+                UserId.of(customerId),
+                FirstName.of(changeUserDetailsDTO.firstName()),
+                LastName.of(changeUserDetailsDTO.lastName()),
+                Email.of(changeUserDetailsDTO.email())
         );
     }
 

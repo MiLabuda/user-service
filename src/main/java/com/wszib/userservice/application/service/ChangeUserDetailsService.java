@@ -22,7 +22,7 @@ class ChangeUserDetailsService implements ChangeUserDetailsUseCase {
     @Override
     public User changeUserDetails(ChangeUserDetailsCommand command) {
         LOGGER.info("Changing user details...");
-        String userId = command.userId();
+        String userId = command.userId().value();
         if(userId == null) throw new NullIdException();
         User existingUser = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
         User updatedUser = existingUser.changeDetailsBy(command);

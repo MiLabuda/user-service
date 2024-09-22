@@ -24,9 +24,9 @@ public class User {
 
 
     public User changeDetailsBy(ChangeUserDetailsCommand cmd){
-        this.firstName = new FirstName(cmd.firstName());
-        this.lastName = new LastName(cmd.lastName());
-        this.email = new Email(cmd.email());
+        this.firstName = cmd.firstName();
+        this.lastName = cmd.lastName();
+        this.email = cmd.email();
         return this;
     }
 
