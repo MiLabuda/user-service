@@ -17,7 +17,9 @@ class UserDataToDomainMapper implements Function<UserData, User> {
     Function<UserRoleData, UserRole> userRoleModelToDomainMapper;
 
     UserDataToDomainMapper(){
-        this(new AddressDataToDomainMapper(), new UserRoleDataToDomainMapper());
+        this(
+                UserMappingFactory.createAddressDataToDomainMapper(),
+                UserMappingFactory.createUserRoleDataToDomainMapper());
     }
 
     UserDataToDomainMapper(
