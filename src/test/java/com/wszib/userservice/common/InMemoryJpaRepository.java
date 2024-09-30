@@ -2,6 +2,7 @@ package com.wszib.userservice.common;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.junit.jupiter.api.DisplayName;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +17,8 @@ import java.util.Optional;
 import java.util.function.Function;
 
 @RequiredArgsConstructor
-public class InMemoryJpaRepository<T, ID> implements JpaRepository <T, ID> {
+@DisplayName("In memory implementation of JpaRepository")
+class InMemoryJpaRepository<T, ID> implements JpaRepository <T, ID> {
 
     protected final Map<ID, T> database = new HashMap<>();
 

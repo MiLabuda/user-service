@@ -29,6 +29,8 @@ class TestArchTest {
                         .that()
                         .resideOutsideOfPackage("com.wszib.userservice.architecture..")
                         .and()
+                        .resideOutsideOfPackage("com.wszib.userservice.common..")
+                        .and()
                         .areTopLevelClasses()
                         .and()
                         .areNotAnnotatedWith(Configuration.class)

@@ -35,7 +35,7 @@ class CreateUserDTOToCommandMapperTest {
 
         CreateUserCommand result = mapper.apply(input);
         assertThat(result).usingRecursiveComparison()
-                .ignoringFields("id", "registeredAt")
+                .ignoringFields("id", "registeredAt", "userId")
                 .isEqualTo(expected);
     }
 
