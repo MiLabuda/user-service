@@ -17,8 +17,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -84,15 +86,18 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDTO> createUser(@RequestBody CreateUserDTO createUserDTO) {
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<Void> createUser(@RequestBody CreateUserDTO createUserDTO) {
         LOGGER.info("Incoming request to create user");
 
         CreateUserCommand command = createUserDTOToCommandMapper.apply(createUserDTO);
-        User createdUser = createUserUseCase.create(command);
-        return ResponseEntity.ok(userDomainToDTOMapper.apply(createdUser));
+        createUserUseCase.handle(command);
+        URI location = URI.create("/users/" + command.userId().value());
+        return ResponseEntity.created(location).build();
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Long> deleteUser(@PathVariable String id) {
         LOGGER.info("Incoming request to delete user by id");
         removeUserUseCase.remove(id);
@@ -100,7 +105,8 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> updateUser(
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<Void> updateUser(
             @PathVariable String id,
             @RequestBody ChangeUserDetailsDTO changeUserDetailsDTO) {
         LOGGER.info("Incoming request to update user by id");
@@ -108,7 +114,8 @@ public class UserController {
 
         ChangeUserDetailsCommand command = UserMappingFactory.createChangeUserDetailsDTOToCommandMapper(id).apply(changeUserDetailsDTO);
 
-        User user = changeUserDetailsUseCase.changeUserDetails(command);
-        return ResponseEntity.ok(userDomainToDTOMapper.apply(user));
+        changeUserDetailsUseCase.handle(command);
+        URI location = URI.create("/users/" + command.userId().value());
+        return ResponseEntity.created(location).build();
     }
 }

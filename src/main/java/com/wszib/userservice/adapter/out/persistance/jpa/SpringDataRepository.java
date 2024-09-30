@@ -20,8 +20,8 @@ class SpringDataRepository implements UserPersistenceInterface {
     }
 
     @Override
-    public UserData save(UserData userData) {
-        return null;
+    public void save(UserData userData) {
+
     }
 
     @Override

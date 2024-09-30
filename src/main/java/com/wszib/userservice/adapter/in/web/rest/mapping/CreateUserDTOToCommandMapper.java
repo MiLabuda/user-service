@@ -26,6 +26,7 @@ class CreateUserDTOToCommandMapper implements Function<CreateUserDTO, CreateUser
         if(createUserDTO == null) return null;
 
         return new CreateUserCommand.Builder()
+                .userId(UserId.generate())
                 .firstName(FirstName.of(createUserDTO.firstName()))
                 .lastName(LastName.of(createUserDTO.lastName()))
                 .email(Email.of(createUserDTO.email()))

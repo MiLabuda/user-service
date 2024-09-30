@@ -9,6 +9,7 @@ import java.time.Instant;
 public record CreateUserCommand(
         CommandId id,
         Instant registeredAt,
+        UserId userId,
         FirstName firstName,
         LastName lastName,
         Email email,
@@ -19,6 +20,7 @@ public record CreateUserCommand(
 ) implements Command {
 
     public static class Builder {
+        private UserId userId;
         private FirstName firstName;
         private LastName lastName;
         private Email email;
@@ -26,6 +28,11 @@ public record CreateUserCommand(
         private RoleName roleName;
         private Address invoiceAddress;
         private Address deliveryAddress;
+
+        public Builder userId(UserId userId) {
+            this.userId = userId;
+            return this;
+        }
 
         public Builder firstName(FirstName firstName) {
             this.firstName = firstName;
@@ -60,6 +67,7 @@ public record CreateUserCommand(
             return new CreateUserCommand(
                     CommandId.generate(),
                     Command.now(),
+                    userId,
                     firstName,
                     lastName,
                     email,

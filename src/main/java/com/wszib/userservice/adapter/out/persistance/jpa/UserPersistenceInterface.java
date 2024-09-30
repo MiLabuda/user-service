@@ -12,7 +12,7 @@ public interface UserPersistenceInterface {
 
     Optional<UserData> findById(String id);
 
-    UserData save(UserData userData);
+    void save(UserData userData);
 
     void delete(String id);
 

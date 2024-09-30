@@ -32,7 +32,7 @@ public class User {
 
     public static User createBy(CreateUserCommand cmd){
         User user =  User.builder()
-                .id(UserId.generate())
+                .id(cmd.userId())
                 .firstName(cmd.firstName())
                 .lastName(cmd.lastName())
                 .email(cmd.email())

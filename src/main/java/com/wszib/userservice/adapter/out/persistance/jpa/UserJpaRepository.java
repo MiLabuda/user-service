@@ -61,12 +61,11 @@ class UserJpaRepository implements UserRepository {
     }
 
     @Override
-    public User save(User user) {
+    public void save(User user) {
         if(user == null) throw new IllegalArgumentException("User cannot be null");
         LOGGER.info("Saving user: {}", user);
-        UserData createdUser = users.save(userDomainToDataMapper.apply(user));
+        users.save(userDomainToDataMapper.apply(user));
         LOGGER.info("Successfully created user");
-        return userDataToDomainMapper.apply(createdUser);
     }
 
     @Override
@@ -77,8 +76,7 @@ class UserJpaRepository implements UserRepository {
     }
 
     @Override
-    public User changeUserDetails(User user) {
+    public void changeUserDetails(User user) {
         //TODO: Implement
-    return null;
     }
 }

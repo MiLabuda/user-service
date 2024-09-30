@@ -9,7 +9,7 @@ public interface UserRepository {
 
     Optional<User> findById(String id);
     List<User> findAllBy(FilterCriteria criteria);
-    User save(User user);
+    void save(User user);
     void delete(String id);
-    User changeUserDetails(User user);
+    void changeUserDetails(User user);
 }
