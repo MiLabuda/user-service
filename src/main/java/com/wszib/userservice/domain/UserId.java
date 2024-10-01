@@ -1,10 +1,12 @@
 package com.wszib.userservice.domain;
 
+import com.wszib.userservice.domain.error.NullIdException;
+
 public record UserId(String value) {
 
     public UserId {
         if (value == null || value.strip().isBlank()) {
-            throw new IllegalArgumentException("UserId cannot be empty!");
+            throw new NullIdException();
         }
     }
 

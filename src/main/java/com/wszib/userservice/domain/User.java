@@ -2,6 +2,7 @@ package com.wszib.userservice.domain;
 
 import com.wszib.userservice.domain.command.ChangeUserDetailsCommand;
 import com.wszib.userservice.domain.command.CreateUserCommand;
+import com.wszib.userservice.infrastructure.aggregate.AggregateRoot;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -10,7 +11,7 @@ import java.util.Set;
 
 @Builder
 @Getter
-public class User {
+public class User implements AggregateRoot {
 
     private UserId id;
     private FirstName firstName;
