@@ -1,4 +1,4 @@
-package com.wszib.userservice.application.usecase;
+package com.wszib.userservice.application.ports.in;
 
 import com.wszib.userservice.domain.querry.FilterCriteria;
 import com.wszib.userservice.domain.User;

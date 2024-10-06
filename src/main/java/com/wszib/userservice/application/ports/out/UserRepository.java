@@ -1,5 +1,6 @@
-package com.wszib.userservice.domain;
+package com.wszib.userservice.application.ports.out;
 
+import com.wszib.userservice.domain.User;
 import com.wszib.userservice.domain.querry.FilterCriteria;
 
 import java.util.List;

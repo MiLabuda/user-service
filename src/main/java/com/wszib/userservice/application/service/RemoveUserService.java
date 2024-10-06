@@ -1,7 +1,7 @@
 package com.wszib.userservice.application.service;
 
-import com.wszib.userservice.application.usecase.RemoveUserUseCase;
-import com.wszib.userservice.domain.UserRepository;
+import com.wszib.userservice.application.ports.in.RemoveUserUseCase;
+import com.wszib.userservice.application.ports.out.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,7 +1,6 @@
-package com.wszib.userservice.application.usecase;
+package com.wszib.userservice.application.ports.in;
 
 import com.wszib.userservice.domain.command.CreateUserCommand;
-import com.wszib.userservice.domain.User;
 
 public interface CreateUserUseCase {
     void handle(CreateUserCommand command);

@@ -1,9 +1,9 @@
 package com.wszib.userservice.application.service;
 
 import com.wszib.userservice.domain.command.CreateUserCommand;
-import com.wszib.userservice.application.usecase.CreateUserUseCase;
+import com.wszib.userservice.application.ports.in.CreateUserUseCase;
 import com.wszib.userservice.domain.User;
-import com.wszib.userservice.domain.UserRepository;
+import com.wszib.userservice.application.ports.out.UserRepository;
 import com.wszib.userservice.infrastructure.handler.CommandHandler;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;

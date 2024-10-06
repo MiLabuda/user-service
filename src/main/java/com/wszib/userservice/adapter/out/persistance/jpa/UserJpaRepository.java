@@ -5,7 +5,7 @@ import com.wszib.userservice.adapter.out.persistance.jpa.model.UserData;
 import com.wszib.userservice.domain.error.NullFilterCriteriaException;
 import com.wszib.userservice.domain.querry.FilterCriteria;
 import com.wszib.userservice.domain.User;
-import com.wszib.userservice.domain.UserRepository;
+import com.wszib.userservice.application.ports.out.UserRepository;
 import com.wszib.userservice.infrastructure.adapter.DrivenAdapter;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;

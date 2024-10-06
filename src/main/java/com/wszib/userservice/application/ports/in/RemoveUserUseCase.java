@@ -1,4 +1,4 @@
-package com.wszib.userservice.application.usecase;
+package com.wszib.userservice.application.ports.in;
 
 public interface RemoveUserUseCase {
 
