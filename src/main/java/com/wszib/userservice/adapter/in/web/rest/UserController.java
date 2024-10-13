@@ -8,11 +8,12 @@ import com.wszib.userservice.domain.command.ChangeUserDetailsCommand;
 import com.wszib.userservice.domain.command.CreateUserCommand;
 import com.wszib.userservice.domain.error.NullIdException;
 import com.wszib.userservice.domain.querry.FilterCriteria;
-import com.wszib.userservice.application.usecase.ChangeUserDetailsUseCase;
-import com.wszib.userservice.application.usecase.CreateUserUseCase;
-import com.wszib.userservice.application.usecase.GetUserUseCase;
-import com.wszib.userservice.application.usecase.RemoveUserUseCase;
+import com.wszib.userservice.application.ports.in.ChangeUserDetailsUseCase;
+import com.wszib.userservice.application.ports.in.CreateUserUseCase;
+import com.wszib.userservice.application.ports.in.GetUserUseCase;
+import com.wszib.userservice.application.ports.in.RemoveUserUseCase;
 import com.wszib.userservice.domain.User;
+import com.wszib.userservice.infrastructure.adapter.DriverAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ import java.util.function.Function;
 
 @RestController
 @RequestMapping("/v1/users")
+@DriverAdapter
 public class UserController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
