@@ -1,5 +1,6 @@
 package com.wszib.userservice.application.service;
 
+import com.wszib.userservice.application.ports.out.KeycloakUserPort;
 import com.wszib.userservice.domain.command.ChangeUserDetailsCommand;
 import com.wszib.userservice.domain.error.NullIdException;
 import com.wszib.userservice.application.ports.in.ChangeUserDetailsUseCase;
@@ -19,6 +20,8 @@ class ChangeUserDetailsCommandHandler implements CommandHandler<ChangeUserDetail
     private static final Logger LOGGER = LoggerFactory.getLogger(ChangeUserDetailsCommandHandler.class);
 
     private final UserRepository userRepository;
+    private final KeycloakUserPort keycloakUserPort;
+
 
     @Override
     public void handle(ChangeUserDetailsCommand command) {
@@ -28,6 +31,7 @@ class ChangeUserDetailsCommandHandler implements CommandHandler<ChangeUserDetail
         User existingUser = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException(userId));
         User updatedUser = existingUser.changeDetailsBy(command);
         userRepository.changeUserDetails(updatedUser);
+        keycloakUserPort.updateUser(updatedUser);
         LOGGER.info("User details changed successfully");
     }
 }
