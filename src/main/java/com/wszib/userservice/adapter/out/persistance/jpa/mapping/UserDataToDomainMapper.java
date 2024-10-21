@@ -43,7 +43,7 @@ class UserDataToDomainMapper implements Function<UserData, User> {
                 .roles(Optional.ofNullable(userData.getRoles()).orElseGet(Collections::emptySet).stream().filter(Objects::nonNull).map(userRoleModelToDomainMapper).collect(Collectors.toSet()))
                 .deliveryAddress(addressModelToDomainMapper.apply(userData.getDeliveryAddress()))
                 .invoiceAddress(addressModelToDomainMapper.apply(userData.getInvoiceAddress()))
-                .active(userData.getActive())
+                .enabled(userData.getActive())
                 .build();
     }
 }

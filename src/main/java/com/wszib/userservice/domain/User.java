@@ -21,7 +21,7 @@ public class User implements AggregateRoot {
     private Set<UserRole> roles;
     private Address deliveryAddress;
     private Address  invoiceAddress;
-    private Boolean active;
+    private Boolean enabled;
 
 
     public User changeDetailsBy(ChangeUserDetailsCommand cmd){
@@ -42,17 +42,17 @@ public class User implements AggregateRoot {
                 .roles(new HashSet<>())
                 .invoiceAddress(cmd.invoiceAddress())
                 .deliveryAddress(cmd.deliveryAddress())
-                .active(true)
+                .enabled(true)
                 .build();
         user.getRoles().add(UserRole.create(user.getId(), cmd.roleName()));
         return user;
     }
 
     public void activate() {
-        this.active = true;
+        this.enabled = true;
     }
 
     public void deactivate() {
-        this.active = false;
+        this.enabled = false;
     }
 }

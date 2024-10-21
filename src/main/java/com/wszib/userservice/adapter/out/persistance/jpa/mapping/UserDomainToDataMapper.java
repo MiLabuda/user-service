@@ -36,7 +36,7 @@ class UserDomainToDataMapper implements Function<User, UserData>{
                 .roles(user.getRoles().stream().map(userRoleDomainToDataMapper).collect(Collectors.toSet()))
                 .deliveryAddress(addressDomainToDataMapper.apply(user.getDeliveryAddress()))
                 .invoiceAddress(addressDomainToDataMapper.apply(user.getInvoiceAddress()))
-                .active(user.getActive())
+                .active(user.getEnabled())
                 .build();
     }
 }

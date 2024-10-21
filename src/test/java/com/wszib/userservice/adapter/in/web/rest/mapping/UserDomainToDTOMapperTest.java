@@ -46,7 +46,7 @@ class UserDomainToDTOMapperTest {
                 .lastName(LastName.of("Holmes"))
                 .email(Email.of("sherlock.holmes@gmail.com"))
                 .roles(Set.of(UserRole.builder().roleName(RoleName.CUSTOMER).build()))
-                .active(true)
+                .enabled(true)
                 .invoiceAddress(Address.builder()
                         .name("Home address")
                         .street("Baker Street 221B")
