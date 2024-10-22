@@ -41,6 +41,5 @@ public class UserData {
     @JoinColumn(name = "invoice_address_id")
     private AddressData  invoiceAddress;
 
-    @NotBlank
     private Boolean active = false;
 }

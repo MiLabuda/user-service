@@ -6,6 +6,7 @@ import com.wszib.userservice.domain.querry.FilterCriteria;
 import java.util.List;
 import java.util.Optional;
 
+
 public interface UserPersistenceInterface {
 
     List<UserData> findAllBy(FilterCriteria filterCriteria);
