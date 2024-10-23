@@ -2,7 +2,6 @@ package com.wszib.userservice.adapter.out.auth.keycloak;
 
 import com.wszib.userservice.adapter.out.auth.keycloak.config.KeycloakConfig;
 import com.wszib.userservice.adapter.out.auth.keycloak.mapping.UserRepresentationMappingFactory;
-import com.wszib.userservice.adapter.out.auth.keycloak.model.UserRepresentationDTO;
 import com.wszib.userservice.application.ports.out.KeycloakUserPort;
 import com.wszib.userservice.domain.User;
 import com.wszib.userservice.infrastructure.adapter.DrivenAdapter;
@@ -24,7 +23,7 @@ public class KeycloakUserRepository implements KeycloakUserPort {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(KeycloakUserRepository.class);
 
-    Function<UserRepresentation, UserRepresentationDTO> userRepresentationToDTOMapper;
+    Function<UserRepresentation, User> userRepresentationToDomainMapper;
     Function<User, UserRepresentation> userToUserRepresentationMapper;
 
     private final KeycloakConfig keycloakConfig;
@@ -32,21 +31,21 @@ public class KeycloakUserRepository implements KeycloakUserPort {
     @Autowired
     KeycloakUserRepository(KeycloakConfig keycloakConfig){
         this(keycloakConfig,
-                UserRepresentationMappingFactory.createUserRepresentationToDTOMapper(),
+                UserRepresentationMappingFactory.createUserRepresentationToDomainMapper(),
                 UserRepresentationMappingFactory.createUserToUserRepresentationMapper()
         );
     }
 
     KeycloakUserRepository(KeycloakConfig keycloakConfig,
-                      Function<UserRepresentation, UserRepresentationDTO> userRepresentationToDTOMapper,
+                      Function<UserRepresentation, User> userRepresentationToDomainMapper,
                            Function<User, UserRepresentation> userToUserRepresentationMapper){
         this.keycloakConfig = keycloakConfig;
-        this.userRepresentationToDTOMapper = userRepresentationToDTOMapper;
+        this.userRepresentationToDomainMapper = userRepresentationToDomainMapper;
         this.userToUserRepresentationMapper = userToUserRepresentationMapper;
     }
 
     @Override
-    public UserRepresentationDTO getUser(String userId) {
+    public User getUser(String userId) {
         LOGGER.debug("Getting user from Keycloak with id: {}", userId);
         try (Keycloak keycloak = keycloakConfig.keycloak()) {
             UserRepresentation keycloakUser =
@@ -55,7 +54,7 @@ public class KeycloakUserRepository implements KeycloakUserPort {
                             .users()
                             .get(userId)
                             .toRepresentation();
-            return userRepresentationToDTOMapper.apply(keycloakUser);
+            return userRepresentationToDomainMapper.apply(keycloakUser);
         } catch (Exception e) {
             LOGGER.error("Error retrieving user from Keycloak", e);
             throw new RuntimeException(e);

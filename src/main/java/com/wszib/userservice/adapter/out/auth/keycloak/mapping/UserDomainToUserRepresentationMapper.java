@@ -8,15 +8,15 @@ import org.keycloak.representations.idm.UserRepresentation;
 import java.util.Collections;
 import java.util.function.Function;
 
-class UserToUserRepresentationMapper implements Function<User, UserRepresentation> {
+class UserDomainToUserRepresentationMapper implements Function<User, UserRepresentation> {
 
     Function<Password, CredentialRepresentation> passwordToCredentialsRepresentationMapper;
 
-    public UserToUserRepresentationMapper() {
+    public UserDomainToUserRepresentationMapper() {
         this(UserRepresentationMappingFactory.createPasswordToCredentialsRepresentationMapper());
     }
 
-    public UserToUserRepresentationMapper(Function<Password, CredentialRepresentation> passwordToCredentialsRepresentationMapper) {
+    public UserDomainToUserRepresentationMapper(Function<Password, CredentialRepresentation> passwordToCredentialsRepresentationMapper) {
         this.passwordToCredentialsRepresentationMapper = passwordToCredentialsRepresentationMapper;
     }
 

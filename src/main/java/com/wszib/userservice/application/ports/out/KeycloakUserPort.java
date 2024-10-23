@@ -4,7 +4,7 @@ import com.wszib.userservice.adapter.out.auth.keycloak.model.UserRepresentationD
 import com.wszib.userservice.domain.User;
 
 public interface KeycloakUserPort {
-    UserRepresentationDTO getUser(String userId);
+    User getUser(String userId);
     void createUser(User user);
     void deleteUser(String userId);
     void updateUser(User user);
