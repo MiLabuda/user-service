@@ -27,7 +27,7 @@ public class UserData {
     @NotBlank
     private String email;
 
-    @NotBlank
+    @Transient
     private String password;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "userId", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -41,5 +41,5 @@ public class UserData {
     @JoinColumn(name = "invoice_address_id")
     private AddressData  invoiceAddress;
 
-    private Boolean active = false;
+    private Boolean active;
 }
