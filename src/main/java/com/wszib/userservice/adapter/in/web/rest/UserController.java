@@ -17,6 +17,7 @@ import com.wszib.userservice.infrastructure.adapter.DriverAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -69,22 +70,23 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserDTO>> getAll(final Optional<String> email,
+    public List<UserDTO> getAll(final Optional<String> email,
                                                 final Optional<String> firstName,
                                                 final Optional<String> lastName,
                                                 final Optional<Boolean> active) {
         LOGGER.info("Incoming request to get all users based on filter criteria");
 
         final FilterCriteria filterCriteria = new FilterCriteria(email, firstName, lastName, active);
-        final List<UserDTO> response = getUserUseCase.findAllBy(filterCriteria).stream().map(userDomainToDTOMapper).toList();
-        return ResponseEntity.ok(response);
+        return getUserUseCase.findAllBy(filterCriteria)
+                .stream()
+                .map(userDomainToDTOMapper)
+                .toList();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> getUser(@PathVariable String id) {
+    public UserDTO getUser(@PathVariable String id) {
         LOGGER.info("Incoming request to get user by id");
-        UserDTO response = userDomainToDTOMapper.apply(getUserUseCase.findById(id));
-        return ResponseEntity.ok(response);
+        return userDomainToDTOMapper.apply(getUserUseCase.findById(id));
     }
 
     @PostMapping
@@ -100,10 +102,10 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<Long> deleteUser(@PathVariable String id) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteUser(@PathVariable String id) {
         LOGGER.info("Incoming request to delete user by id");
         removeUserUseCase.remove(id);
-        return ResponseEntity.ok().build();
     }
 
     @PutMapping("/{id}")
