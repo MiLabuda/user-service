@@ -70,10 +70,12 @@ public class UserController {
     }
 
     @GetMapping
-    public List<UserDTO> getAll(final Optional<String> email,
-                                                final Optional<String> firstName,
-                                                final Optional<String> lastName,
-                                                final Optional<Boolean> active) {
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public List<UserDTO> getAll(
+            @RequestParam(name = "email", required = false) Optional<String> email,
+            @RequestParam(name = "firstName", required = false) Optional<String> firstName,
+            @RequestParam(name = "lastName", required = false) Optional<String> lastName,
+            @RequestParam(name = "active", required = false) Optional<Boolean> active) {
         LOGGER.info("Incoming request to get all users based on filter criteria");
 
         final FilterCriteria filterCriteria = new FilterCriteria(email, firstName, lastName, active);
