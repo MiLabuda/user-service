@@ -471,6 +471,11 @@
     "disableableCredentialTypes" : [ ],
     "requiredActions" : [ ],
     "realmRoles" : [ "default-roles-wszib-realm" ],
+    "clientRoles" : {
+      "broker" : [ "read-token" ],
+      "account" : [ "view-profile", "manage-consent", "manage-account", "view-consent", "view-groups", "delete-account", "view-applications", "manage-account-links" ],
+      "microservices" : [ "CUSTOMER" ]
+    },
     "notBefore" : 0,
     "groups" : [ ]
   }, {
