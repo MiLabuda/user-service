@@ -35,3 +35,6 @@ build/
 ### Properties ###
 src/main/resources/bootstrap.properties
 application.properties
+
+### Others ###
+.DS_Store
