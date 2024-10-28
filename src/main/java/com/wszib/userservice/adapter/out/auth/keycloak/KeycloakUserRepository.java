@@ -63,7 +63,8 @@ public class KeycloakUserRepository implements KeycloakUserPort {
 
     @Override
     public void createUser(User user) {
-        try (Keycloak keycloak = keycloakConfig.keycloak()) {
+        Keycloak keycloak = keycloakConfig.keycloak();
+        try {
             UserRepresentation userRepresentation = userToUserRepresentationMapper.apply(user);
             keycloak
                     .realm(keycloakConfig.realm(keycloak).getRealm())
