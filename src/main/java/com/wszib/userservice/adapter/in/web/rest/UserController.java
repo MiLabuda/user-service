@@ -6,7 +6,8 @@ import com.wszib.userservice.adapter.in.web.rest.model.CreateUserDTO;
 import com.wszib.userservice.adapter.in.web.rest.model.UserDTO;
 import com.wszib.userservice.domain.command.ChangeUserDetailsCommand;
 import com.wszib.userservice.domain.command.CreateUserCommand;
-import com.wszib.userservice.domain.error.NullIdException;
+import com.wszib.userservice.domain.error.AccessDeniedException;
+import com.wszib.userservice.domain.error.NullException;
 import com.wszib.userservice.domain.querry.FilterCriteria;
 import com.wszib.userservice.application.ports.in.ChangeUserDetailsUseCase;
 import com.wszib.userservice.application.ports.in.CreateUserUseCase;
@@ -14,6 +15,7 @@ import com.wszib.userservice.application.ports.in.GetUserUseCase;
 import com.wszib.userservice.application.ports.in.RemoveUserUseCase;
 import com.wszib.userservice.domain.User;
 import com.wszib.userservice.infrastructure.adapter.DriverAdapter;
+import com.wszib.userservice.infrastructure.utils.UserUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,6 +90,7 @@ public class UserController {
     @GetMapping("/{id}")
     public UserDTO getUser(@PathVariable String id) {
         LOGGER.info("Incoming request to get user by id");
+        validateUserAccess(id);
         return userDomainToDTOMapper.apply(getUserUseCase.findById(id));
     }
 
@@ -107,6 +110,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable String id) {
         LOGGER.info("Incoming request to delete user by id");
+        validateUserAccess(id);
         removeUserUseCase.remove(id);
     }
 
@@ -116,12 +120,20 @@ public class UserController {
             @PathVariable String id,
             @RequestBody ChangeUserDetailsDTO changeUserDetailsDTO) {
         LOGGER.info("Incoming request to update user by id");
-        if(id == null) throw new NullIdException();
+        if(id == null) throw NullException.forId();
+        validateUserAccess(id);
 
         ChangeUserDetailsCommand command = UserMappingFactory.createChangeUserDetailsDTOToCommandMapper(id).apply(changeUserDetailsDTO);
 
         changeUserDetailsUseCase.handle(command);
         URI location = URI.create("/users/" + command.userId().value());
         return ResponseEntity.created(location).build();
+    }
+
+    private static void validateUserAccess(String id) {
+        if (!UserUtils.isAdmin() && !UserUtils.isSelf(id)) {
+            LOGGER.warn("Access denied for user: {}", id);
+            throw AccessDeniedException.forUser(id);
+        }
     }
 }
