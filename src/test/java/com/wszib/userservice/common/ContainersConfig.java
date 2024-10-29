@@ -12,7 +12,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 public class ContainersConfig {
 
     static String POSTGRES_IMAGE = "postgres:14-alpine";
-    static String KEYCLOAK_IMAGE = "quay.io/keycloak/keycloak:25.0";
+    static String KEYCLOAK_IMAGE = "keycloak/keycloak:25.0";
     static String realmImportFile = "/wszib-realm.json";
     static String realmName = "wszib-realm";
 
@@ -28,8 +28,7 @@ public class ContainersConfig {
     KeycloakContainer keycloakContainer(DynamicPropertyRegistry registry) {
         var keycloak = new KeycloakContainer(KEYCLOAK_IMAGE)
                 .withRealmImportFile(realmImportFile);
-        registry.add(
-                "spring.security.oauth2.resourceserver.jwt.issuer-uri",
+        registry.add("spring.security.oauth2.resourceserver.jwt.issuer-uri",
                 () -> keycloak.getAuthServerUrl() + "/realms/" + realmName
         );
         return keycloak;
