@@ -2,7 +2,7 @@ package com.wszib.userservice.adapter.out.persistance.jpa;
 
 import com.wszib.userservice.adapter.out.persistance.jpa.mapping.UserMappingFactory;
 import com.wszib.userservice.adapter.out.persistance.jpa.model.UserData;
-import com.wszib.userservice.domain.error.NullFilterCriteriaException;
+import com.wszib.userservice.domain.error.NullException;
 import com.wszib.userservice.domain.querry.FilterCriteria;
 import com.wszib.userservice.domain.User;
 import com.wszib.userservice.application.ports.out.UserRepository;
@@ -55,7 +55,7 @@ class UserJpaRepository implements UserRepository {
 
     @Override
     public List<User> findAllBy(FilterCriteria criteria) {
-        if(criteria == null) throw new NullFilterCriteriaException();
+        if(criteria == null) throw NullException.forFilterCriteria();
         LOGGER.info("Finding users by criteria: {}", criteria);
         return users.findAllBy(criteria).stream().map(userDataToDomainMapper).collect(Collectors.toList());
     }

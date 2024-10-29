@@ -1,11 +1,10 @@
 package com.wszib.userservice.application.service;
 
-import com.wszib.userservice.domain.error.NullFilterCriteriaException;
-import com.wszib.userservice.domain.error.NullIdException;
+import com.wszib.userservice.domain.error.NullException;
+import com.wszib.userservice.domain.error.NotFoundException;
 import com.wszib.userservice.domain.querry.FilterCriteria;
 import com.wszib.userservice.application.ports.in.GetUserUseCase;
 import com.wszib.userservice.domain.User;
-import com.wszib.userservice.domain.UserNotFoundException;
 import com.wszib.userservice.application.ports.out.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -25,15 +24,15 @@ class GetUserService implements GetUserUseCase {
 
     @Override
     public List<User> findAllBy(FilterCriteria criteria) {
-        if (criteria == null) throw new NullFilterCriteriaException();
+        if (criteria == null) throw NullException.forFilterCriteria();
         LOGGER.info("Retrieving customers...");
         return userRepository.findAllBy(criteria);
     }
 
     @Override
     public User findById(String id) {
-        if(id == null) throw new NullIdException();
+        if(id == null) throw NullException.forId();
         LOGGER.info("Retrieving single customer...");
-        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+        return userRepository.findById(id).orElseThrow(() -> NotFoundException.forUser(id));
     }
 }

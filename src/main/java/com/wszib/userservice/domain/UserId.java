@@ -1,12 +1,12 @@
 package com.wszib.userservice.domain;
 
-import com.wszib.userservice.domain.error.NullIdException;
+import com.wszib.userservice.domain.error.NullException;
 
 public record UserId(String value) {
 
     public UserId {
         if (value == null || value.strip().isBlank()) {
-            throw new NullIdException();
+            throw NullException.forId();
         }
     }
 

@@ -6,7 +6,7 @@ import com.wszib.userservice.domain.FirstName;
 import com.wszib.userservice.domain.LastName;
 import com.wszib.userservice.domain.UserId;
 import com.wszib.userservice.domain.command.ChangeUserDetailsCommand;
-import com.wszib.userservice.domain.error.NullIdException;
+import com.wszib.userservice.domain.error.NullException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -34,7 +34,7 @@ class ChangeUserDTOToCommandMapperTest {
     void testNullUserId() {
         mapper = new ChangeUserDetailsDTOToCommandMapper(null);
         ChangeUserDetailsDTO input = constructInput();
-        assertThrows(NullIdException.class, () -> mapper.apply(input));
+        assertThrows(NullException.class, () -> mapper.apply(input));
     }
 
     @Test
