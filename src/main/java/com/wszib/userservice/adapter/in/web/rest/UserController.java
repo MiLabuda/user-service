@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Function;
 
 @RestController
@@ -74,10 +73,10 @@ public class UserController {
     @GetMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public List<UserDTO> getAll(
-            @RequestParam(name = "email", required = false) Optional<String> email,
-            @RequestParam(name = "firstName", required = false) Optional<String> firstName,
-            @RequestParam(name = "lastName", required = false) Optional<String> lastName,
-            @RequestParam(name = "active", required = false) Optional<Boolean> active) {
+            @RequestParam(required = false) String email,
+            @RequestParam(required = false) String firstName,
+            @RequestParam(required = false) String lastName,
+            @RequestParam(required = false) Boolean active) {
         LOGGER.info("Incoming request to get all users based on filter criteria");
 
         final FilterCriteria filterCriteria = new FilterCriteria(email, firstName, lastName, active);
