@@ -36,6 +36,7 @@ class UserDomainToDataMapper implements Function<User, UserData>{
                 .deliveryAddress(addressDomainToDataMapper.apply(user.getDeliveryAddress()))
                 .invoiceAddress(addressDomainToDataMapper.apply(user.getInvoiceAddress()))
                 .enabled(user.getEnabled())
+                .keycloakStatus(UserData.KeycloakStatus.valueOf(user.getKeycloakStatus().name()))
                 .build();
     }
 }

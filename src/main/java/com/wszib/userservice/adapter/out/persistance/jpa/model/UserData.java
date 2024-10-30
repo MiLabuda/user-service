@@ -39,4 +39,13 @@ public class UserData {
     private AddressData  invoiceAddress;
 
     private Boolean enabled;
+
+    @Enumerated(EnumType.STRING)
+    private KeycloakStatus keycloakStatus;
+
+    public enum KeycloakStatus {
+        NOT_SYNCED,
+        SYNCED,
+        ERROR
+    }
 }

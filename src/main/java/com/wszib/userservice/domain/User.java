@@ -22,6 +22,7 @@ public class User implements AggregateRoot {
     private Address deliveryAddress;
     private Address  invoiceAddress;
     private Boolean enabled;
+    private KeycloakStatus keycloakStatus;
 
 
     public User changeDetailsBy(ChangeUserDetailsCommand cmd){
@@ -42,6 +43,7 @@ public class User implements AggregateRoot {
                 .invoiceAddress(cmd.invoiceAddress())
                 .deliveryAddress(cmd.deliveryAddress())
                 .enabled(true)
+                .keycloakStatus(KeycloakStatus.NOT_SYNCED)
                 .build();
         user.getRoles().add(UserRole.create(user.getId(), cmd.roleName()));
         return user;
@@ -53,5 +55,19 @@ public class User implements AggregateRoot {
 
     public void disable() {
         this.enabled = false;
+    }
+
+    public enum KeycloakStatus {
+        NOT_SYNCED,
+        SYNCED,
+        ERROR
+    }
+
+    public void markAsSynced() {
+        this.keycloakStatus = KeycloakStatus.SYNCED;
+    }
+
+    public void markAsError() {
+        this.keycloakStatus = KeycloakStatus.ERROR;
     }
 }

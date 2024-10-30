@@ -2,6 +2,7 @@ package com.wszib.userservice.adapter.out.auth.keycloak;
 
 import com.wszib.userservice.adapter.out.auth.keycloak.config.KeycloakConfig;
 import com.wszib.userservice.adapter.out.auth.keycloak.mapping.UserRepresentationMappingFactory;
+import com.wszib.userservice.adapter.out.auth.keycloak.model.KeycloakSynchronizationException;
 import com.wszib.userservice.application.ports.out.KeycloakUserPort;
 import com.wszib.userservice.domain.User;
 import com.wszib.userservice.infrastructure.adapter.DrivenAdapter;
@@ -73,7 +74,7 @@ public class KeycloakUserRepository implements KeycloakUserPort {
             LOGGER.info("User synced with Keycloak successfully");
         } catch (Exception e) {
             LOGGER.error("Error syncing user with Keycloak", e);
-            throw new RuntimeException(e);
+            throw new KeycloakSynchronizationException("Failed to sync user with Keycloak", e);
         }
     }
 
