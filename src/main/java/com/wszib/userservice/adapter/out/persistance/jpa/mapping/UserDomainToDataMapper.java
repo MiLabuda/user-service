@@ -32,11 +32,10 @@ class UserDomainToDataMapper implements Function<User, UserData>{
                 .firstName(user.getFirstName().value())
                 .lastName(user.getLastName().value())
                 .email(user.getEmail().value())
-                .password(user.getPassword().getValue())
                 .roles(user.getRoles().stream().map(userRoleDomainToDataMapper).collect(Collectors.toSet()))
                 .deliveryAddress(addressDomainToDataMapper.apply(user.getDeliveryAddress()))
                 .invoiceAddress(addressDomainToDataMapper.apply(user.getInvoiceAddress()))
-                .active(user.getEnabled())
+                .enabled(user.getEnabled())
                 .build();
     }
 }

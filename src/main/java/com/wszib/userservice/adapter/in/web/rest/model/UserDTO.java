@@ -11,7 +11,7 @@ public record UserDTO(
         String lastName,
         String email,
         Set<String> roles,
-        Boolean active,
+        Boolean enabled,
         AddressDTO invoiceAddress,
         AddressDTO deliveryAddress
 ) {}

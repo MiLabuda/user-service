@@ -37,7 +37,6 @@ public class User implements AggregateRoot {
                 .firstName(cmd.firstName())
                 .lastName(cmd.lastName())
                 .email(cmd.email())
-                //TODO Implement password hashing
                 .password(cmd.password())
                 .roles(new HashSet<>())
                 .invoiceAddress(cmd.invoiceAddress())
@@ -48,11 +47,11 @@ public class User implements AggregateRoot {
         return user;
     }
 
-    public void activate() {
+    public void enable() {
         this.enabled = true;
     }
 
-    public void deactivate() {
+    public void disable() {
         this.enabled = false;
     }
 }

@@ -39,11 +39,10 @@ class UserDataToDomainMapper implements Function<UserData, User> {
                 .firstName(FirstName.of(userData.getFirstName()))
                 .lastName(LastName.of(userData.getLastName()))
                 .email(Email.of(userData.getEmail()))
-                .password(Password.of(userData.getPassword()))
                 .roles(Optional.ofNullable(userData.getRoles()).orElseGet(Collections::emptySet).stream().filter(Objects::nonNull).map(userRoleModelToDomainMapper).collect(Collectors.toSet()))
                 .deliveryAddress(addressModelToDomainMapper.apply(userData.getDeliveryAddress()))
                 .invoiceAddress(addressModelToDomainMapper.apply(userData.getInvoiceAddress()))
-                .enabled(userData.getActive())
+                .enabled(userData.getEnabled())
                 .build();
     }
 }

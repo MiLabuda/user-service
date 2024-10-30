@@ -70,7 +70,7 @@ class UserDomainToDTOMapperTest {
                 .lastName("Holmes")
                 .email("sherlock.holmes@gmail.com")
                 .roles(Set.of("CUSTOMER"))
-                .active(true)
+                .enabled(true)
                 .invoiceAddress(AddressDTO.builder()
                         .addressName("Home address")
                         .street("Baker Street 221B")

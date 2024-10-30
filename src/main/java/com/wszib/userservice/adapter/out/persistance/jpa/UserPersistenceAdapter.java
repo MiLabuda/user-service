@@ -57,8 +57,8 @@ public class UserPersistenceAdapter implements UserPersistenceInterface {
         if (filterCriteria.lastName() != null) {
             predicates.add(cb.like(root.get("lastName"), "%" + filterCriteria.lastName() + "%"));
         }
-        if (filterCriteria.active() != null) {
-            predicates.add(cb.equal(root.get("active"), filterCriteria.active()));
+        if (filterCriteria.enabled() != null) {
+            predicates.add(cb.equal(root.get("enabled"), filterCriteria.enabled()));
         }
 
         return cb.and(predicates.toArray(new Predicate[0]));
