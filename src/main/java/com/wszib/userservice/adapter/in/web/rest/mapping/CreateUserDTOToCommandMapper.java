@@ -1,13 +1,13 @@
 package com.wszib.userservice.adapter.in.web.rest.mapping;
 
 import com.wszib.userservice.adapter.in.web.rest.model.AddressDTO;
-import com.wszib.userservice.adapter.in.web.rest.model.CreateUserDTO;
+import com.wszib.userservice.adapter.in.web.rest.model.RegisterUserDTO;
 import com.wszib.userservice.domain.*;
-import com.wszib.userservice.domain.command.CreateUserCommand;
+import com.wszib.userservice.domain.command.RegisterUserCommand;
 
 import java.util.function.Function;
 
-class CreateUserDTOToCommandMapper implements Function<CreateUserDTO, CreateUserCommand> {
+class CreateUserDTOToCommandMapper implements Function<RegisterUserDTO, RegisterUserCommand> {
 
     Function<AddressDTO, Address> addressDTOToDomainMapper;
 
@@ -22,18 +22,18 @@ class CreateUserDTOToCommandMapper implements Function<CreateUserDTO, CreateUser
     }
 
     @Override
-    public CreateUserCommand apply(CreateUserDTO createUserDTO) {
-        if(createUserDTO == null) return null;
+    public RegisterUserCommand apply(RegisterUserDTO registerUserDTO) {
+        if(registerUserDTO == null) return null;
 
-        return new CreateUserCommand.Builder()
+        return new RegisterUserCommand.Builder()
                 .userId(UserId.generate())
-                .firstName(FirstName.of(createUserDTO.firstName()))
-                .lastName(LastName.of(createUserDTO.lastName()))
-                .email(Email.of(createUserDTO.email()))
-                .password(Password.of(createUserDTO.password()))
-                .roleName(RoleName.of(createUserDTO.roleName()))
-                .invoiceAddress(addressDTOToDomainMapper.apply(createUserDTO.invoiceAddress()))
-                .deliveryAddress(addressDTOToDomainMapper.apply(createUserDTO.deliveryAddress()))
+                .firstName(FirstName.of(registerUserDTO.firstName()))
+                .lastName(LastName.of(registerUserDTO.lastName()))
+                .email(Email.of(registerUserDTO.email()))
+                .password(Password.of(registerUserDTO.password()))
+                .roleName(RoleName.of(registerUserDTO.roleName()))
+                .invoiceAddress(addressDTOToDomainMapper.apply(registerUserDTO.invoiceAddress()))
+                .deliveryAddress(addressDTOToDomainMapper.apply(registerUserDTO.deliveryAddress()))
                 .build();
     }
 }

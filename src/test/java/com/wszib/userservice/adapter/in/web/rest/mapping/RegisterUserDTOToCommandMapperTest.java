@@ -1,9 +1,9 @@
 package com.wszib.userservice.adapter.in.web.rest.mapping;
 
 import com.wszib.userservice.adapter.in.web.rest.model.AddressDTO;
-import com.wszib.userservice.adapter.in.web.rest.model.CreateUserDTO;
+import com.wszib.userservice.adapter.in.web.rest.model.RegisterUserDTO;
 import com.wszib.userservice.domain.*;
-import com.wszib.userservice.domain.command.CreateUserCommand;
+import com.wszib.userservice.domain.command.RegisterUserCommand;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,36 +11,36 @@ import java.util.function.Function;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-@DisplayName("CreateUserDTO to Command Mapper Test")
-class CreateUserDTOToCommandMapperTest {
+@DisplayName("RegisterUserDTO to Command Mapper Test")
+class RegisterUserDTOToCommandMapperTest {
 
-    Function<CreateUserDTO, CreateUserCommand> mapper;
+    Function<RegisterUserDTO, RegisterUserCommand> mapper;
 
-    CreateUserDTOToCommandMapperTest() {
+    RegisterUserDTOToCommandMapperTest() {
         mapper = new CreateUserDTOToCommandMapper();
     }
 
     @Test
     @DisplayName("Should map null to literal null")
     void testNull() {
-        CreateUserCommand result = mapper.apply(null);
+        RegisterUserCommand result = mapper.apply(null);
         assertThat(result).isNull();
     }
 
     @Test
-    @DisplayName("Should map CreateUserDTO to CreateUserCommand")
+    @DisplayName("Should map RegisterUserDTO to RegisterUserCommand")
     void testValidMapping() {
-        CreateUserDTO input = constructInput();
-        CreateUserCommand expected = constructExpectedCommand();
+        RegisterUserDTO input = constructInput();
+        RegisterUserCommand expected = constructExpectedCommand();
 
-        CreateUserCommand result = mapper.apply(input);
+        RegisterUserCommand result = mapper.apply(input);
         assertThat(result).usingRecursiveComparison()
                 .ignoringFields("id", "registeredAt", "userId")
                 .isEqualTo(expected);
     }
 
-    private CreateUserDTO constructInput() {
-        return CreateUserDTO.builder()
+    private RegisterUserDTO constructInput() {
+        return RegisterUserDTO.builder()
                 .firstName("Sherlock")
                 .lastName("Holmes")
                 .email("sherlock.holmes@gmail.com")
@@ -62,8 +62,8 @@ class CreateUserDTOToCommandMapperTest {
                         .build())
                 .build();
     }
-    private CreateUserCommand constructExpectedCommand() {
-        return new CreateUserCommand.Builder()
+    private RegisterUserCommand constructExpectedCommand() {
+        return new RegisterUserCommand.Builder()
                 .firstName(FirstName.of("Sherlock"))
                 .lastName(LastName.of("Holmes"))
                 .email(Email.of("sherlock.holmes@gmail.com"))

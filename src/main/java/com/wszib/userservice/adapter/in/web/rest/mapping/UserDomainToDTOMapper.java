@@ -29,7 +29,6 @@ class UserDomainToDTOMapper implements Function<User, UserDTO> {
                 user.getFirstName().value(),
                 user.getLastName().value(),
                 user.getEmail().value(),
-                //TODO Think if adding UserRoleDTO would be better
                 user.getRoles().stream().map(role -> role.getRoleName().value()).collect(Collectors.toSet()),
                 user.getEnabled(),
                 addressAddressDTOMapper.apply(user.getInvoiceAddress()),

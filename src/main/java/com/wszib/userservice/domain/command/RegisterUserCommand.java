@@ -6,7 +6,7 @@ import com.wszib.userservice.infrastructure.command.CommandId;
 
 import java.time.Instant;
 
-public record CreateUserCommand(
+public record RegisterUserCommand(
         CommandId id,
         Instant registeredAt,
         UserId userId,
@@ -63,8 +63,8 @@ public record CreateUserCommand(
             return this;
         }
 
-        public CreateUserCommand build() {
-            return new CreateUserCommand(
+        public RegisterUserCommand build() {
+            return new RegisterUserCommand(
                     CommandId.generate(),
                     Command.now(),
                     userId,

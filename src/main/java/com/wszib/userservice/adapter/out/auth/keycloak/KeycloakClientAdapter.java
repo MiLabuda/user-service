@@ -20,9 +20,9 @@ import java.util.function.Function;
 @Repository
 @Transactional
 @DrivenAdapter
-public class KeycloakUserRepository implements KeycloakUserPort {
+public class KeycloakClientAdapter implements KeycloakUserPort {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(KeycloakUserRepository.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(KeycloakClientAdapter.class);
 
     Function<UserRepresentation, User> userRepresentationToDomainMapper;
     Function<User, UserRepresentation> userToUserRepresentationMapper;
@@ -30,16 +30,16 @@ public class KeycloakUserRepository implements KeycloakUserPort {
     private final KeycloakConfig keycloakConfig;
 
     @Autowired
-    KeycloakUserRepository(KeycloakConfig keycloakConfig){
+    KeycloakClientAdapter(KeycloakConfig keycloakConfig){
         this(keycloakConfig,
                 UserRepresentationMappingFactory.createUserRepresentationToDomainMapper(),
                 UserRepresentationMappingFactory.createUserToUserRepresentationMapper()
         );
     }
 
-    KeycloakUserRepository(KeycloakConfig keycloakConfig,
-                      Function<UserRepresentation, User> userRepresentationToDomainMapper,
-                           Function<User, UserRepresentation> userToUserRepresentationMapper){
+    KeycloakClientAdapter(KeycloakConfig keycloakConfig,
+                          Function<UserRepresentation, User> userRepresentationToDomainMapper,
+                          Function<User, UserRepresentation> userToUserRepresentationMapper){
         this.keycloakConfig = keycloakConfig;
         this.userRepresentationToDomainMapper = userRepresentationToDomainMapper;
         this.userToUserRepresentationMapper = userToUserRepresentationMapper;
@@ -63,7 +63,7 @@ public class KeycloakUserRepository implements KeycloakUserPort {
     }
 
     @Override
-    public void createUser(User user) {
+    public void registerUser(User user) {
         Keycloak keycloak = keycloakConfig.keycloak();
         try {
             UserRepresentation userRepresentation = userToUserRepresentationMapper.apply(user);

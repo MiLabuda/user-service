@@ -1,7 +1,7 @@
 package com.wszib.userservice.domain;
 
 import com.wszib.userservice.domain.command.ChangeUserDetailsCommand;
-import com.wszib.userservice.domain.command.CreateUserCommand;
+import com.wszib.userservice.domain.command.RegisterUserCommand;
 import com.wszib.userservice.infrastructure.aggregate.AggregateRoot;
 import lombok.Builder;
 import lombok.Getter;
@@ -32,7 +32,7 @@ public class User implements AggregateRoot {
         return this;
     }
 
-    public static User createBy(CreateUserCommand cmd){
+    public static User registerBy(RegisterUserCommand cmd){
         User user =  User.builder()
                 .id(cmd.userId())
                 .firstName(cmd.firstName())

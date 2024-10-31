@@ -3,7 +3,7 @@ package com.wszib.userservice.adapter.in.web.rest.model;
 import lombok.Builder;
 
 @Builder
-public record CreateUserDTO(
+public record RegisterUserDTO(
         String firstName,
         String lastName,
         String email,

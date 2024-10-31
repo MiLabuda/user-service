@@ -50,7 +50,7 @@ class CreatingUserFunctionalTest {
 
     @ParameterizedTest(name = "{index} - Token Type: {0}, Expected Status: {1}")
     @MethodSource("userRoleProvider")
-    @DisplayName("Should create or deny user creation based on role authorization")
+    @DisplayName("Should register or deny user creation based on role authorization")
     void createUserWithAuthorization(UserTestUtils.TokenType tokenType, HttpStatus expectedStatus) {
         userTestHelper.sendPostRequestAndCompareStatus(
                 tokenType,

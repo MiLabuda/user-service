@@ -1,7 +1,7 @@
 package com.wszib.userservice.common;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.wszib.userservice.adapter.in.web.rest.model.CreateUserDTO;
+import com.wszib.userservice.adapter.in.web.rest.model.RegisterUserDTO;
 import io.restassured.http.ContentType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -43,7 +43,7 @@ public class UserTestUtils {
     private final RestTemplate restTemplate = new RestTemplate();
 
     public void sendPostRequestAndCompareStatus(TokenType tokenType, HttpStatus expectedStatus) {
-        CreateUserDTO request = constructRequest();
+        RegisterUserDTO request = constructRequest();
         String token = getToken(tokenType);
         given()
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
@@ -55,8 +55,8 @@ public class UserTestUtils {
                 .statusCode(expectedStatus.value());
     }
 
-    private CreateUserDTO constructRequest() {
-        return new CreateUserDTO(
+    private RegisterUserDTO constructRequest() {
+        return new RegisterUserDTO(
                 "John",
                 "Doe",
                 "john.doe@gmail.com",

@@ -65,7 +65,7 @@ class UserJpaRepository implements UserRepository {
         if(user == null) throw new IllegalArgumentException("User cannot be null");
         LOGGER.info("Saving user: {}", user);
         users.save(userDomainToDataMapper.apply(user));
-        LOGGER.info("Successfully created user");
+        LOGGER.info("Successfully registered user");
     }
 
     @Override

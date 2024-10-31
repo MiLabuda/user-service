@@ -2,15 +2,15 @@ package com.wszib.userservice.adapter.in.web.rest;
 
 import com.wszib.userservice.adapter.in.web.rest.mapping.UserMappingFactory;
 import com.wszib.userservice.adapter.in.web.rest.model.ChangeUserDetailsDTO;
-import com.wszib.userservice.adapter.in.web.rest.model.CreateUserDTO;
+import com.wszib.userservice.adapter.in.web.rest.model.RegisterUserDTO;
 import com.wszib.userservice.adapter.in.web.rest.model.UserDTO;
 import com.wszib.userservice.domain.command.ChangeUserDetailsCommand;
-import com.wszib.userservice.domain.command.CreateUserCommand;
+import com.wszib.userservice.domain.command.RegisterUserCommand;
 import com.wszib.userservice.domain.error.AccessDeniedException;
 import com.wszib.userservice.domain.error.NullException;
 import com.wszib.userservice.domain.querry.FilterCriteria;
 import com.wszib.userservice.application.ports.in.ChangeUserDetailsUseCase;
-import com.wszib.userservice.application.ports.in.CreateUserUseCase;
+import com.wszib.userservice.application.ports.in.RegisterUserUseCase;
 import com.wszib.userservice.application.ports.in.GetUserUseCase;
 import com.wszib.userservice.application.ports.in.RemoveUserUseCase;
 import com.wszib.userservice.domain.User;
@@ -36,21 +36,21 @@ public class UserController {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
     Function<User, UserDTO> userDomainToDTOMapper;
-    Function<CreateUserDTO, CreateUserCommand> createUserDTOToCommandMapper;
+    Function<RegisterUserDTO, RegisterUserCommand> createUserDTOToCommandMapper;
 
     private final GetUserUseCase getUserUseCase;
     private final RemoveUserUseCase removeUserUseCase;
-    private final CreateUserUseCase createUserUseCase;
+    private final RegisterUserUseCase registerUserUseCase;
     private final ChangeUserDetailsUseCase changeUserDetailsUseCase;
 
     @Autowired
     UserController(GetUserUseCase getUserUseCase,
                    RemoveUserUseCase removeUserUseCase,
-                   CreateUserUseCase createUserUseCase,
+                   RegisterUserUseCase registerUserUseCase,
                    ChangeUserDetailsUseCase changeUserDetailsUseCase) {
         this(getUserUseCase,
                 removeUserUseCase,
-                createUserUseCase,
+                registerUserUseCase,
                 changeUserDetailsUseCase,
                 UserMappingFactory.createUserDomainToDTOMapper(),
                 UserMappingFactory.createUserDTOToCommandMapper());
@@ -58,13 +58,13 @@ public class UserController {
 
     UserController(GetUserUseCase getUserUseCase,
                    RemoveUserUseCase removeUserUseCase,
-                   CreateUserUseCase createUserUseCase,
+                   RegisterUserUseCase registerUserUseCase,
                    ChangeUserDetailsUseCase changeUserDetailsUseCase,
                    Function<User, UserDTO> userDomainToDTOMapper,
-                   Function<CreateUserDTO, CreateUserCommand> createUserDTOToCommandMapper) {
+                   Function<RegisterUserDTO, RegisterUserCommand> createUserDTOToCommandMapper) {
         this.getUserUseCase = getUserUseCase;
         this.removeUserUseCase = removeUserUseCase;
-        this.createUserUseCase = createUserUseCase;
+        this.registerUserUseCase = registerUserUseCase;
         this.changeUserDetailsUseCase = changeUserDetailsUseCase;
         this.userDomainToDTOMapper = userDomainToDTOMapper;
         this.createUserDTOToCommandMapper = createUserDTOToCommandMapper;
@@ -95,11 +95,11 @@ public class UserController {
 
     @PostMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<Void> createUser(@RequestBody CreateUserDTO createUserDTO) {
+    public ResponseEntity<Void> registerUser(@RequestBody RegisterUserDTO registerUserDTO) {
         LOGGER.info("Incoming request to create user");
 
-        CreateUserCommand command = createUserDTOToCommandMapper.apply(createUserDTO);
-        createUserUseCase.handle(command);
+        RegisterUserCommand command = createUserDTOToCommandMapper.apply(registerUserDTO);
+        registerUserUseCase.handle(command);
         URI location = URI.create("/users/" + command.userId().value());
         return ResponseEntity.created(location).build();
     }
