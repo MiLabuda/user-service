@@ -3,7 +3,7 @@ package com.wszib.userservice.adapter.out.auth.keycloak;
 import com.wszib.userservice.adapter.out.auth.keycloak.config.KeycloakConfig;
 import com.wszib.userservice.adapter.out.auth.keycloak.mapping.UserRepresentationMappingFactory;
 import com.wszib.userservice.adapter.out.auth.keycloak.model.KeycloakSynchronizationException;
-import com.wszib.userservice.application.ports.out.KeycloakUserPort;
+import com.wszib.userservice.application.ports.out.KeycloakClientPort;
 import com.wszib.userservice.domain.User;
 import com.wszib.userservice.infrastructure.adapter.DrivenAdapter;
 import jakarta.transaction.Transactional;
@@ -20,7 +20,7 @@ import java.util.function.Function;
 @Repository
 @Transactional
 @DrivenAdapter
-public class KeycloakClientAdapter implements KeycloakUserPort {
+public class KeycloakClientAdapter implements KeycloakClientPort {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(KeycloakClientAdapter.class);
 

@@ -1,7 +1,7 @@
 package com.wszib.userservice.application.service;
 
 import com.wszib.userservice.adapter.out.auth.keycloak.model.KeycloakSynchronizationException;
-import com.wszib.userservice.application.ports.out.KeycloakUserPort;
+import com.wszib.userservice.application.ports.out.KeycloakClientPort;
 import com.wszib.userservice.domain.command.RegisterUserCommand;
 import com.wszib.userservice.application.ports.in.RegisterUserUseCase;
 import com.wszib.userservice.domain.User;
@@ -19,7 +19,7 @@ class RegisterUserCommandHandler implements CommandHandler<RegisterUserCommand>,
     private static final Logger LOGGER = LoggerFactory.getLogger(RegisterUserCommandHandler.class);
 
     private final UserRepository userRepository;
-    private final KeycloakUserPort keycloakUserPort;
+    private final KeycloakClientPort keycloakClientPort;
 
     @Override
     public void handle(RegisterUserCommand command) {
@@ -28,7 +28,7 @@ class RegisterUserCommandHandler implements CommandHandler<RegisterUserCommand>,
         userRepository.save(user);
         LOGGER.info("User registered successfully");
         try {
-            keycloakUserPort.registerUser(user);
+            keycloakClientPort.registerUser(user);
             user.markAsSynced();
             userRepository.save(user);
             LOGGER.info("User successfully synchronized with Keycloak");
