@@ -32,7 +32,7 @@ public class User implements AggregateRoot {
         return this;
     }
 
-    public static User registerBy(RegisterUserCommand cmd){
+    static User registerBy(RegisterUserCommand cmd){
         User user =  User.builder()
                 .id(cmd.userId())
                 .firstName(cmd.firstName())
