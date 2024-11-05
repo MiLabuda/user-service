@@ -25,7 +25,8 @@ class UserDomainToUserRepresentationMapper implements Function<User, UserReprese
         if(user == null) return null;
 
         UserRepresentation userRepresentation = new UserRepresentation();
-        userRepresentation.setId(user.getId().value());
+//        https://github.com/keycloak/keycloak/issues/12454 -- Keycloak issue with syncing user with custom id
+//        userRepresentation.setId(user.getId().value());
         userRepresentation.setUsername(user.getEmail().value());
         userRepresentation.setEmail(user.getEmail().value());
         userRepresentation.setFirstName(user.getFirstName().value());
