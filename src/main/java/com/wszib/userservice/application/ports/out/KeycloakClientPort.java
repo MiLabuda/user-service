@@ -7,4 +7,5 @@ public interface KeycloakClientPort {
     String registerUser(User user);
     void deleteUser(String userId);
     void updateUser(User user);
+    void updateUserStatus(String userId, boolean enabled);
 }

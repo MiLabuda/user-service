@@ -35,4 +35,14 @@ class GetUserService implements GetUserUseCase {
         LOGGER.info("Retrieving single customer...");
         return userRepository.findById(id).orElseThrow(() -> NotFoundException.forUser(id));
     }
+
+    @Override
+    public Boolean existsById(String id) {
+        return userRepository.existsById(id);
+    }
+
+    @Override
+    public Boolean existsByIdAndStatus(String id, boolean enabled) {
+        return userRepository.existsByIdAndStatus(id, enabled);
+    }
 }

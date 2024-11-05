@@ -79,4 +79,21 @@ class UserJpaRepository implements UserRepository {
     public void changeUserDetails(User user) {
         //TODO: Implement
     }
+
+    @Override
+    public void changeUserStatus(String userId, boolean enabled) {
+        LOGGER.info("Changing user status: {} to {}", userId, enabled);
+        users.changeUserStatus(userId, enabled);
+        LOGGER.info("Successfully changed user status");
+    }
+
+    @Override
+    public Boolean existsById(String id) {
+        return users.existsById(id);
+    }
+
+    @Override
+    public Boolean existsByIdAndStatus(String id, boolean enabled) {
+        return users.existsByIdAndStatus(id, enabled);
+    }
 }

@@ -2,17 +2,15 @@ package com.wszib.userservice.adapter.in.web.rest;
 
 import com.wszib.userservice.adapter.in.web.rest.mapping.UserMappingFactory;
 import com.wszib.userservice.adapter.in.web.rest.model.ChangeUserDetailsDTO;
+import com.wszib.userservice.adapter.in.web.rest.model.InvalidStatusChangeException;
 import com.wszib.userservice.adapter.in.web.rest.model.RegisterUserDTO;
 import com.wszib.userservice.adapter.in.web.rest.model.UserDTO;
+import com.wszib.userservice.application.ports.in.*;
 import com.wszib.userservice.domain.command.ChangeUserDetailsCommand;
 import com.wszib.userservice.domain.command.RegisterUserCommand;
 import com.wszib.userservice.domain.error.AccessDeniedException;
 import com.wszib.userservice.domain.error.NullException;
 import com.wszib.userservice.domain.querry.FilterCriteria;
-import com.wszib.userservice.application.ports.in.ChangeUserDetailsUseCase;
-import com.wszib.userservice.application.ports.in.RegisterUserUseCase;
-import com.wszib.userservice.application.ports.in.GetUserUseCase;
-import com.wszib.userservice.application.ports.in.RemoveUserUseCase;
 import com.wszib.userservice.domain.User;
 import com.wszib.userservice.infrastructure.adapter.DriverAdapter;
 import com.wszib.userservice.infrastructure.utils.UserUtils;
@@ -42,16 +40,19 @@ public class UserController {
     private final RemoveUserUseCase removeUserUseCase;
     private final RegisterUserUseCase registerUserUseCase;
     private final ChangeUserDetailsUseCase changeUserDetailsUseCase;
+    private final ChangeUserStatusUseCase changeUserStatusUseCase;
 
     @Autowired
     UserController(GetUserUseCase getUserUseCase,
                    RemoveUserUseCase removeUserUseCase,
                    RegisterUserUseCase registerUserUseCase,
-                   ChangeUserDetailsUseCase changeUserDetailsUseCase) {
+                   ChangeUserDetailsUseCase changeUserDetailsUseCase,
+                   ChangeUserStatusUseCase changeUserStatusUseCase) {
         this(getUserUseCase,
                 removeUserUseCase,
                 registerUserUseCase,
                 changeUserDetailsUseCase,
+                changeUserStatusUseCase,
                 UserMappingFactory.createUserDomainToDTOMapper(),
                 UserMappingFactory.createUserDTOToCommandMapper());
     }
@@ -60,12 +61,14 @@ public class UserController {
                    RemoveUserUseCase removeUserUseCase,
                    RegisterUserUseCase registerUserUseCase,
                    ChangeUserDetailsUseCase changeUserDetailsUseCase,
+                     ChangeUserStatusUseCase changeUserStatusUseCase,
                    Function<User, UserDTO> userDomainToDTOMapper,
                    Function<RegisterUserDTO, RegisterUserCommand> createUserDTOToCommandMapper) {
         this.getUserUseCase = getUserUseCase;
         this.removeUserUseCase = removeUserUseCase;
         this.registerUserUseCase = registerUserUseCase;
         this.changeUserDetailsUseCase = changeUserDetailsUseCase;
+        this.changeUserStatusUseCase = changeUserStatusUseCase;
         this.userDomainToDTOMapper = userDomainToDTOMapper;
         this.createUserDTOToCommandMapper = createUserDTOToCommandMapper;
     }
@@ -127,6 +130,16 @@ public class UserController {
         changeUserDetailsUseCase.handle(command);
         URI location = URI.create("/users/" + command.userId().value());
         return ResponseEntity.created(location).build();
+    }
+
+    @PatchMapping("/{id}/enabled")
+    public ResponseEntity<Void> updateUserStatus(@PathVariable String id, @RequestParam boolean enabled) {
+        validateUserAccess(id);
+        if(getUserUseCase.existsByIdAndStatus(id, enabled)){
+            throw new InvalidStatusChangeException();
+        };
+        changeUserStatusUseCase.enableUser(id);
+        return ResponseEntity.noContent().build();
     }
 
     private static void validateUserAccess(String id) {

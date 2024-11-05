@@ -10,4 +10,9 @@ public interface GetUserUseCase {
     List<User> findAllBy(FilterCriteria criteria);
 
     User findById(String id);
+
+    Boolean existsById(String id);
+
+    Boolean existsByIdAndStatus(String id, boolean enabled);
+
 }

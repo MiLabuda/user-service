@@ -79,4 +79,19 @@ public class UserPersistenceAdapter implements UserPersistenceInterface {
     public void delete(String id) {
         springDataRepository.deleteById(id);
     }
+
+    @Override
+    public void changeUserStatus(String userId, boolean enabled) {
+        springDataRepository.updateUserStatusById(userId, enabled);
+    }
+
+    @Override
+    public Boolean existsById(String id) {
+        return springDataRepository.existsById(id);
+    }
+
+    @Override
+    public Boolean existsByIdAndStatus(String id, boolean enabled) {
+        return springDataRepository.existsByIdAndEnabled(id, enabled);
+    }
 }

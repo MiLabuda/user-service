@@ -17,4 +17,10 @@ public interface UserPersistenceInterface {
 
     void delete(String id);
 
+    void changeUserStatus(String userId, boolean enabled);
+
+    Boolean existsById(String id);
+
+    Boolean existsByIdAndStatus(String id, boolean enabled);
+
 }
